@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	    <link rel="stylesheet" href="style/styleCss.css"/>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">Cadastro de Anais de Eventos</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/">Início</a>
+	      <a class="nav-item nav-link" href="cadastrarVolume">Cadastrar Volume</a>
+	    </div>
+	  </div>
+	</nav>
+	<br>
+	<body>
+		<div th:each="volume : ${volume}" class="container">
+			<h4>Detalhes do Volume</h4>
+			<div class="card">
+			  <p class="card-header">			    
+			  	<a type="button" class="btn btn-outline-dark" href="/">Voltar</a>
+			  	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modalExemplo">Cadastrar Artigo</button>
+			    <a type="button" class="btn btn-outline-warning" th:href="@{/editarVolume/{id}(id=${volume.idVolume})}">Editar</a>
+			    <a class="btn btn-outline-danger" th:href="${(#mvc.url('VC#removerVolume').arg(0, volume.idVolume)).build()}">Excluir</a>
+			  </p>
+			  <div class="card-body">
+			    <p class="card-text"><b>Sigla do Evento: </b><span th:text="${volume.siglaEvento}"></span></p>
+			    <p class="card-text"><b>Número da Edição: </b><span th:text="${volume.numEdicao}"></span></p>
+			    <p class="card-text"><b>Cidade: </b><span th:text="${volume.cidade}"></span></p>
+			    <p class="card-text"><b>Data de Início: </b><span th:text="${#temporals.format(volume.dataInicio, 'dd/MM/yyy')}"></td></p>
+			    <p class="card-text"><b>Descrição em Português: </b><span th:text="${volume.descrPort}"></span></p>
+			    <p class="card-text"><b>Descrição em Inglês: </b> <span th:text="${volume.descrIngles}"></span></p>
+			    <p class="card-text"><b>Artigo(s): </b></p>
+			    <div class='container'>
+					<br>
+					<table class="table table-hover">
+					  <thead>
+					    <tr>
+					      <th scope="col">Título</th>
+					      <th scope="col">Ordem do Artigo no Volume</th>
+					      <th scope="col"></th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	<tr th:each="artigo : ${artigos}">
+							<td><span th:text="${artigo.titulo_original}"></span></td>
+							<td><span th:text="${autor.numOrdem}"></span></td>
+							<td><a type="button" class="btn btn-outline-dark" th:href="${(#mvc.url('AC#detalhesArtigo').arg(0, artigo.idArtigo)).build()}">Ver Detalhes</a></td>
+						</tr>
+					  </tbody>
+					</table>
+				</div>
+			  </div>
+			</div>
+			<br>
+
+			<!-- Modal -->
+			<div class="modal fade bd-example-modal-lg" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-lg" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Cadastro de Artigo</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <form method="post" th:object="${volume}">
+					  <div class="form-row">
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Ordem do Artigo no Volume</label>
+					      <input type="number" class="form-control" id="input1" value="" name="numOordem" placeholder="Número Ordem">
+					    </div>
+					    <div class="form-group col-md-6">
+					      <label for="inputPassword4">Idioma</label>
+					      <input type="text" class="form-control" id="input2" value="" name="idioma" placeholder="Idioma">
+					    </div>
+					  </div>
+					   <div class="form-row">
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Título Original</label>
+					      <input type="text" class="form-control" id="input3" value="" name="titulo_original" placeholder="Título Original">
+					    </div>
+					    <div class="form-group col-md-6">
+					      <label for="inputPassword4">Título em Inglês</label>
+					      <input type="text" class="form-control" id="input4" value="" name="titulo_ingles" placeholder="Título em Inglês">
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Resumo Original</label>
+					      	<textarea style="height:150px" class="form-control" aria-label="Com textarea" id="input5"value="" name="resumo_original" placeholder="Resumo Original"></textarea>
+					    </div>
+					    <div class="form-group col-md-6">
+					      <label for="inputPassword4">Resumo em Inglês</label>
+					      	<textarea style="height:150px" class="form-control" aria-label="Com textarea" id="input6" value="" name="resumo_ingles" placeholder="Resumo em Inglês"></textarea>
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Palavras Chave Originais</label>
+					      <input type="text" class="form-control" id="input7" value="" name="palavras_chave_orig" placeholder="Palavras Chave Originais">
+					    </div>
+					    <div class="form-group col-md-6">
+					      <label for="inputPassword4">Palavras Chave em Inglês</label>
+					      <input type="text" class="form-control" id="input8" value="" name="palavras_chave_ingles" placeholder="Palavras Chave em Inglês">
+					    </div>
+					  </div>
+					  <div class="form-row">
+					    <div class="form-group col-md-6">
+					      <label for="inputEmail4">Número de Páginas</label>
+					      <input type="number" class="form-control" id="input9" value="" name="num_paginas" placeholder="Número de Páginas">
+					    </div>
+					  </div>
+					  <br>
+	  				  <div class="modal-footer">
+			          	<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Fechar</button>
+			        	<button type="submit" class="btn btn-outline-info">Salvar</button>
+			      	  </div>
+					</form>
+				   </div>
+			    </div>
+			  </div>
+			</div>
+		</body>
+	
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+</html>

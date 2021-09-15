@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	    <link rel="stylesheet" href="style/styleCss.css"/>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">Cadastro de Anais de Eventos</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/">Início</a>
+	      <a class="nav-item nav-link" href="cadastrarVolume">Cadastrar Volume</a>
+	    </div>
+	  </div>
+	</nav>
+	<br>
+	<body>
+		<div th:each="artigo : ${artigo}" class="container">
+			<h4>Detalhes do Artigo</h4>
+			<div class="card">
+			  <p class="card-header">			    
+			  	<a type="button" class="btn btn-outline-dark" onclick="goBack()">Voltar</a>
+			  	<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modalExemplo">Cadastrar Autor</button>
+			    <a type="button" class="btn btn-outline-warning" th:href="@{/editarArtigo/{id}(id=${artigo.idArtigo})}">Editar</a>
+				<a class="btn btn-outline-danger" th:href="${(#mvc.url('VC#removerArtigo').arg(0, artigo.idArtigo)).build()}">Excluir</a>
+			  </p>
+			  <div class="card-body">
+			    <p class="card-text"><b>Ordem do Artigo no Volume: </b><span th:text="${artigo.numOrdem}"></span></p>
+			    <p class="card-text"><b>Idioma: </b><span th:text="${artigo.idioma}"></span></p>
+			    <p class="card-text"><b>Título Original: </b><span th:text="${artigo.titulo_original}"></span></p>
+			    <p class="card-text"><b>Título em Inglês: </b><span th:text="${artigo.titulo_ingles}"></span></p>
+			    <p class="card-text"><b>Resumo Original: </b><span th:text="${artigo.resumo_original}"></span></p>
+			    <p class="card-text"><b>Resumo em Inglês: </b> <span th:text="${artigo.resumo_ingles}"></span></p>
+			    <p class="card-text"><b>Palavras Chave Originais: </b> <span th:text="${artigo.palavras_chave_orig}"></span></p>
+			    <p class="card-text"><b>Resumo em Chave em em Inglês: </b> <span th:text="${artigo.palavras_chave_ingles}"></span></p>
+			    <p class="card-text"><b>Número de Páginas: </b> <span th:text="${artigo.num_paginas}"></span></p>
+			    <p class="card-text"><b>Autor(es): </b></p>
+			    <div class='container'>
+					<br>
+					<table class="table table-hover">
+								<div class="card">
+
+						<p class="card-header">			    
+	
+						  <thead>
+						    <tr>
+						      <th scope="col">Nome Completo</th>
+						      <th scope="col">Ordem do Autor no Artigo</th>
+						      <th scope="col"></th>
+						    </tr>
+						  </thead>
+						</p>
+								</div>
+					  <tbody>
+					  	<tr th:each="autor : ${autores}">
+							<td><span th:text="${autor.primeiro_nome} + ' '+ ${autor.nome_meio} + ' '+ ${autor.sobrenome}"></span></td>
+							<td><span th:text="${autor.numOrdem}"></span></td>
+							<td><a type="button" class="btn btn-outline-dark" th:href="${(#mvc.url('AC#detalhesAutor').arg(0, autor.idAutor)).build()}">Ver Detalhes</a></td>
+						</tr>
+					  </tbody>
+					</table>
+				</div>
+			  </div>
+		</div>
+		<br>
+
+		<!-- Modal -->
+		<div class="modal fade bd-example-modal-lg" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-lg" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Cadastro de Autor</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <form method="post" th:object="${artigo}">
+				   <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputEmail4">Primeiro Nome</label>
+				      <input type="text" class="form-control" id="input1" value="" name="primeiro_nome" placeholder="Primeiro Nome">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="inputPassword4">Nome do Meio</label>
+				      <input type="text" class="form-control" id="input2" value="" name="nome_meio" placeholder="Nome do Meio">
+				    </div>
+				  </div>
+				   <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputEmail4">Sobrenome</label>
+				      <input type="text" class="form-control" id="input3" value="" name="sobrenome" placeholder="Sobrenome">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="inputPassword4">E-mail</label>
+				      <input type="email" class="form-control" id="input4" value="" name="email" placeholder="E-mail">
+				    </div>
+				  </div>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputEmail4">Afiliação</label>
+				      <input type="text" class="form-control" id="input5" value="" name="afiliacao" placeholder="Afiliação">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="inputPassword4">Afiliação em Inglês</label>
+				      <input type="text" class="form-control" id="input6" value="" name="afiliacao_ingles" placeholder="Afiliação em Inglês">
+				    </div>
+				  </div>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputEmail4">País</label>
+				      <input type="text" class="form-control" id="input7" value="" name="pais" placeholder="País">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <label for="inputPassword4">Registro OrcID</label>
+				      <input type="text" class="form-control" id="input8" value="" name="OrcID" placeholder="XXXX-XXXX-XXXX-XXXX">
+				    </div>
+				  </div>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="inputEmail4">Ordem do Autor no Artigo</label>
+				      <input type="number" class="form-control" id="input7" value="" name="numOrdem" placeholder="Ordem do Autor no Artigo">
+				    </div>
+				  </div>
+				  <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancelar</button>
+				  <button type="submit" class="btn btn-outline-info">Salvar</button>
+				</form>
+			   </div>
+		    </div>
+		  </div>
+		</div>
+	</body>
+	<script>
+		function goBack() {
+    		window.history.back()
+		}
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+</html>

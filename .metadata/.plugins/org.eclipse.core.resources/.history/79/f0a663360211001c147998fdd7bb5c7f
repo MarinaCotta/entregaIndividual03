@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	    <link rel="stylesheet" href="style/styleCss.css"/>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">Cadastro de Anais de Eventos</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/">Início</a>
+	      <a class="nav-item nav-link" href="cadastrarVolume">Cadastrar Volume</a>
+	    </div>
+	  </div>
+	</nav>
+	<br>
+	<body>
+		<div class="container">
+			<form th:action="@{/atualizaAutor}" method="post" th:object="${autorObj}">
+				<input type="hidden" th:field="*{idVolume}"> 
+			   <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">Primeiro Nome</label>
+			      <input type="text" class="form-control" id="input1" value="" th:field="*{primeiro_nome}" name="primeiro_nome" placeholder="Primeiro Nome">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">Nome do Meio</label>
+			      <input type="text" class="form-control" id="input2" value="" th:field="*{nome_meio}" name="nome_meio" placeholder="Nome do Meio">
+			    </div>
+			  </div>
+			   <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">Sobrenome</label>
+			      <input type="text" class="form-control" id="input3" value="" th:field="*{sobrenome}" name="sobrenome" placeholder="Sobrenome">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">E-mail</label>
+			      <input type="email" class="form-control" id="input4" value="" th:field="*{email}" name="email" placeholder="E-mail">
+			    </div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">Afiliação</label>
+			      <input type="text" class="form-control" id="input5" value="" th:field="*{afiliacao}" name="afiliacao" placeholder="Afiliação">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">Afiliação em Inglês</label>
+			      <input type="text" class="form-control" id="input6" value="" th:field="*{afiliacao_ingles}" name="afiliacao_ingles" placeholder="Afiliação em Inglês">
+			    </div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">País</label>
+			      <input type="text" class="form-control" id="input7" value="" th:field="*{pais}" name="pais" placeholder="País">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">Registro OrcID</label>
+			      <input type="text" class="form-control" id="input8" value="" th:field="*{OrcID}" name="OrcID" placeholder="OrcID">
+			    </div>
+			  </div>
+			  <a type="button" class="btn btn-outline-dark" href="/">Cancelar</a>
+			  <button type="submit" class="btn btn-outline-primary">Salvar</button>
+			</form>
+	 	 </div>
+	</body>
+	<script>
+		function goBack() {
+    		window.history.back()
+		}
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+</html>

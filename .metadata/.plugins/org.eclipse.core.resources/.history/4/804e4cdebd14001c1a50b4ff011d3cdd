@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	    <link rel="stylesheet" href="style/styleCss.css"/>
+	</head>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="#">Cadastro de Anais de Eventos</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Alterna navegação">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active" href="/">Início</a>
+	      <a class="nav-item nav-link" href="cadastrarVolume">Cadastrar Volume</a>
+	    </div>
+	  </div>
+	</nav>
+	<br>
+	<body>
+		<div th:each="autor : ${autor}" class="container">
+			<h5>Detalhes do Autor</h5>
+			<div class="card">
+			  <p class="card-header">			    
+			  	<a type="button" class="btn btn-outline-dark" onclick="goBack()">Voltar</a>
+			    <a type="button" class="btn btn-outline-warning" th:href="@{/editarAutor/{id}(id=${autor.idAutor})}">Editar</a>
+				<a class="btn btn-outline-danger" th:href="${(#mvc.url('AC#removerAutor').arg(0, autor.idAutor)).build()}">Excluir</a>
+			  </p>
+			  <div class="card-body">
+			    <p class="card-text"><b>Primeiro Nome: </b><span th:text="${autor.primeiro_nome}"></span></p>
+			    <p class="card-text"><b>Nome do Meio: </b><span th:text="${autor.nome_meio}"></span></p>
+			    <p class="card-text"><b>Sobrenome: </b><span th:text="${autor.sobrenome}"></span></p>
+			    <p class="card-text"><b>E-mail: </b><span th:text="${autor.email}"></span></p>
+			    <p class="card-text"><b>Afiliação: </b> <span th:text="${autor.afiliacao}"></span></p>
+			    <p class="card-text"><b>Afiliação em Inglês: </b> <span th:text="${autor.afiliacao_ingles}"></span></p>
+			    <p class="card-text"><b>País: </b> <span th:text="${autor.pais}"></span></p>
+			    <p class="card-text"><b>Registro OrcID: </b> <span th:text="${autor.OrcID}"></span></p>
+			    <p class="card-text"><b>Ordem do Autor no Artigo: </b><span th:text="${autor.num_ordem}"></span></p>
+			  </div>
+			 </div>
+		</div>
+	</body>
+	<script>
+		function goBack() {
+    		window.history.back()
+		}
+	</script>
+	
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+</html>
